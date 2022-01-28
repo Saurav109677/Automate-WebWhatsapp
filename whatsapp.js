@@ -6,7 +6,8 @@ const qrcode = require('qrcode-terminal');
 const client = new Client();
 
 let numbers;
-let message = "🎉🎊🎉🎊🎉🎊🎊✨🎊\n"+
+let message ="From Node Js App\n\n"+
+ "🎉🎊🎉🎊🎉🎊🎊✨🎊\n"+
 "☀️☀️☀️☀️☀️☀️☀️☀️☀️☀️\n\n"+
 
 "*VOICE* presents online PRERNA : a festival of positive inspiration\n\n"+
@@ -41,7 +42,7 @@ client.on('ready', () => {
     console.log('Client is ready!');
 
     for(i=0;i<numbers.length;i++){
-        const chatId = numbers[i].trim()+"@c.us";
+        const chatId = "91"+numbers[i].trim()+"@c.us";
         console.log("chatId",chatId);
          // Sending message.
         client.sendMessage(chatId, message);
