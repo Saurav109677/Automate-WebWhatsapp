@@ -25,8 +25,9 @@ client.on('ready', () => {
         // client.sendMessage(chatId,media, {caption: 'this is my caption !! hare krsna!!'});
 
         try{
-            const media = MessageMedia.fromUrl('https://go-lakshmi.s3.ap-south-1.amazonaws.com/1642682696068_prabhupada666.jpg');
-            client.sendMessage(chatId,media);
+            // const media = MessageMedia.fromUrl('https://go-lakshmi.s3.ap-south-1.amazonaws.com/1642682696068_prabhupada666.jpg');
+            // client.sendMessage(chatId,media);
+            sendMedia(chatId);
         }
         catch(e){
             console.log(e);
@@ -34,7 +35,13 @@ client.on('ready', () => {
        
     }
 
+     client.destroy();
    });
+
+   const sendMedia = async(chatId)=>{
+    let media = await new MessageMedia("image/png", base64.data, "image.png")
+            await client.sendMessage(chatId, media, {caption: "my image"})
+   }
 
 
 
