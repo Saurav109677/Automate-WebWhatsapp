@@ -9,7 +9,7 @@ const fs = require('fs');
 
 
 // Path where the session data will be stored
-const SESSION_FILE_PATH = './session.json';
+const SESSION_FILE_PATH = './sessions/session.json';
 
 // Load the session data if it has been previously saved
 let sessionData;
@@ -37,30 +37,31 @@ let numbers;
 let invitation ="🎉🎊🎉🎊🎉🎊🎊✨🎊\n"+
 "☀️☀️☀️☀️☀️☀️☀️☀️☀️☀️\n\n"+
 
-"*VOICE* presents online PRERNA\n"+
-"a festival of positive inspiration\n\n"+
+"*PRERNA Festival*\n"+
+"presented by Haldia VOICE\n\n"+
 
 "*Topic :*\n\n"+
 
-"*Session - 4 (CONCLUDING SESSION)*\n"+
-"*FOUR PILLARS OF SUCCESSFUL CAREER* 🎓🎓\n"+
+"💖 *Reel Love To Real Love* 💖\n"+
 "Based on the teachings of *Bhagavad Gita* 📔\n\n"+
+
+"*Events:*\n"+
+"🤩Drama\n"+
+"🎤Inspirational Talk\n"+
+"🎶Music & Dance\n"+
+"😋Delicious Feast\n\n"+
+
 
 "*Guest Speaker :* 🎙️\n"+
 "*HG Kumar Lila Das*❉\n"+
 "BTech, IIT BHU\n"+
 "Motivational Speaker\n\n"+
 
-"*Date -* 27th Feb 2022 🗓️\n"+
-"*Time -* 12pm to 1:30pm ⏰\n\n"+
+"*Venue -* VOICE (offline)\n"+  
+"*Date -* 12th Mar 2022 🗓️\n"+
+"*Time -* 11:30 AM ⏰\n\n"+
 
-"Join Zoom Meeting:\n"+
- "*https://cutt.ly/haldiaVOICE* \n\n"+
-
-"Meeting ID: *939 7758 0348* \n"+
-"Passcode: *271950* \n\n"+
-
-"*For any query, contact -* +919065062820 \n\n"+
+"®️*CONTACT US FOR REGISTRATION\n\n*"+
 
 "Your ever well-wisher\n"+
 "*VOICE* 🌼\n";
@@ -86,7 +87,7 @@ const sendMedia = async(chatId,message)=>{
     // const media = new MessageMedia('image/png', base64);
     // client.sendMessage(chatId,media);
 
-    const media = MessageMedia.fromFilePath('./conclusion.jpg');
+    const media = MessageMedia.fromFilePath('./prerna.jpg');
     await client.sendMessage(chatId,media,{caption:message});
     console.log("Success!! ",chatId);
 
@@ -105,8 +106,8 @@ client.on('ready', () => {
         
          // Sending message.
         // client.sendMessage(chatId, message);
-        // sendMedia(chatId,invitation);
-        sendMessage(chatId,reminder);
+        sendMedia(chatId,invitation);
+        // sendMessage(chatId,reminder);
     }
 
     console.log("Total Count = "+numbers.length);
