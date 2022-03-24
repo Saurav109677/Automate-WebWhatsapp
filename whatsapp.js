@@ -42,7 +42,7 @@ let invitation ="🎉🎊🎉🎊🎉🎊🎊✨🎊\n"+
 
 "*Topic :*\n\n"+
 
-"💖 *Reel Love To Real Love* 💖\n"+
+" ☀ *Positive Mental Attitude* ☀\n"+
 "Based on the teachings of *Bhagavad Gita* 📔\n\n"+
 
 "*Events:*\n"+
@@ -53,15 +53,15 @@ let invitation ="🎉🎊🎉🎊🎉🎊🎊✨🎊\n"+
 
 
 "*Guest Speaker :* 🎙️\n"+
-"*HG Kumar Lila Das*❉\n"+
-"BTech, IIT BHU\n"+
+"*HG Nimai Anand Das *❉\n"+
+"BTech, IIT Kharagpur\n"+
 "Motivational Speaker\n\n"+
 
 "*Venue -* VOICE (offline)\n"+  
-"*Date -* 12th Mar 2022 🗓️\n"+
+"*Date -* Sat, Mar 26, 2022 🗓️\n"+
 "*Time -* 11:30 AM ⏰\n\n"+
 
-"®️*CONTACT US FOR REGISTRATION\n\n*"+
+"® *CONTACT US FOR REGISTRATION* \n\n"+
 
 "Your ever well-wisher\n"+
 "*VOICE* 🌼\n";
@@ -87,7 +87,7 @@ const sendMedia = async(chatId,message)=>{
     // const media = new MessageMedia('image/png', base64);
     // client.sendMessage(chatId,media);
 
-    const media = MessageMedia.fromFilePath('./prerna.jpg');
+    const media = MessageMedia.fromFilePath('./prernaPMA.jpeg');
     await client.sendMessage(chatId,media,{caption:message});
     console.log("Success!! ",chatId);
 
