@@ -1,13 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const { Client } = require('whatsapp-web.js');
+const { Client, MessageMedia } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
-const { MessageMedia } = require('whatsapp-web.js');
-// const client = new Client();
 const fs = require('fs');
+const { exit } = require('process');
+const invitation = require('./resources/invitation');
+const message = require('./resources/message');
+const prompt =require('prompt')
+let ch=0;
 
 
+
+prompt.start();
 // Path where the session data will be stored
 const SESSION_FILE_PATH = './sessions/session.json';
 
@@ -34,84 +39,52 @@ client.on('authenticated', (session) => {
 });
 
 let numbers;
-let invitation ="🎉🎊🎉🎊🎉🎊🎊✨🎊\n"+
-"☀️☀️☀️☀️☀️☀️☀️☀️☀️☀️\n\n"+
-
-"*PRERNA Festival*\n"+
-"presented by Haldia VOICE\n\n"+
-
-"*Topic :*\n\n"+
-
-" ☀ *Positive Mental Attitude* ☀\n"+
-"Based on the teachings of *Bhagavad Gita* 📔\n\n"+
-
-"*Events:*\n"+
-"🤩Drama\n"+
-"🎤Inspirational Talk\n"+
-"🎶Music & Dance\n"+
-"😋Delicious Feast\n\n"+
-
-
-"*Guest Speaker :* 🎙️\n"+
-"*HG Nimai Anand Das *❉\n"+
-"BTech, IIT Kharagpur\n"+
-"Motivational Speaker\n\n"+
-
-"*Venue -* VOICE (offline)\n"+  
-"*Date -* Sat, Mar 26, 2022 🗓️\n"+
-"*Time -* 11:30 AM ⏰\n\n"+
-
-"® *CONTACT US FOR REGISTRATION* \n\n"+
-
-"Your ever well-wisher\n"+
-"*VOICE* 🌼\n";
-
-// let message = "https://www.youtube.com/watch?v=gZnGYV0f9SY";
-
-let reminder = "‼️ *REMINDER* ‼️\n"+
-"*Join today at 12pm*"
-
-let session2Li = "https://www.youtube.com/watch?v=XoZsjcs-sllU"
-let session3Li = "https://youtu.be/zSnQC_8bLZM"
-
-let msg2= "‼️ Have you attended the previous session ? ‼️\n"+
-"*SECOND PILLAR OF SUCCESSFUL CAREER* 🎊🎊"
 
 client.on('qr', qr => {
     qrcode.generate(qr, {small: true});
 });
 
+client.on('ready', () => {
+    console.log('Client is ready!');
+    
 
-const sendMedia = async(chatId,message)=>{
+    for(i=0;i<numbers.length;i++){
+        const chatId = "91"+numbers[i].trim()+"@c.us";
 
-    // const media = new MessageMedia('image/png', base64);
-    // client.sendMessage(chatId,media);
+        if(ch=='1'){
+            console.log("Sending media message!!!")
+            sendMedia(chatId,invitation);
+        }
+        else if(ch=='2'){
+            console.log("Sending simple message!!!")
+            sendMessage(chatId,message);
+        }
+        else{
+            console.log("wrong choice!!")
+            exit();
+        }
 
-    const media = MessageMedia.fromFilePath('./prernaPMA.jpeg');
-    await client.sendMessage(chatId,media,{caption:message});
-    console.log("Success!! ",chatId);
+    }
 
-}
+    console.log("Total Count = "+numbers.length);
+});
+
+// ================ SERVICES ====================================
 
 const sendMessage = async(chatId,message)=>{
     await client.sendMessage(chatId, message);
     console.log("Message sent!",chatId);
 }
 
-client.on('ready', () => {
-    console.log('Client is ready!');
+const sendMedia = async(chatId,message)=>{
+    const media = MessageMedia.fromFilePath('./resources/images/c.jpg');
+    await client.sendMessage(chatId,media,{caption:message});
+    console.log("Success!! ",chatId);
+}
 
-    for(i=0;i<numbers.length;i++){
-        const chatId = "91"+numbers[i].trim()+"@c.us";
-        
-         // Sending message.
-        // client.sendMessage(chatId, message);
-        sendMedia(chatId,invitation);
-        // sendMessage(chatId,reminder);
-    }
+// ================ END OF SERVICES ====================================
 
-    console.log("Total Count = "+numbers.length);
-});
+
 
 app.use(bodyParser.urlencoded({ extended: true })); 
 
@@ -130,5 +103,18 @@ app.post('/send', (req, res) => {
 const port = 8080;
 
 app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+  
+    // console.log(message)
+  console.log("Please select the format you want to send - \n")
+  console.log("1. MESSAGE WITH IMAGE \n 2. MESSAGE WITHOUT IMAGE\n")
+    prompt.get(['choice'], function (err, result) {
+        if (err) {
+        return onErr(err);
+        }
+        console.log('Command-line input received:');
+        console.log('  Choice: ' + result.choice);
+        ch=result.choice
+        console.log(`Server running on port ${port}`);
+    });
+
 });
