@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const { Client, MessageMedia } = require('whatsapp-web.js');
+const { Client, MessageMedia , LegacySessionAuth ,LocalAuth} = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const fs = require('fs');
 const { exit } = require('process');
@@ -20,11 +20,20 @@ const SESSION_FILE_PATH = './sessions/session.json';
 let sessionData;
 if(fs.existsSync(SESSION_FILE_PATH)) {
     sessionData = require(SESSION_FILE_PATH);
+    console.log(sessionData)
 }
 
 // Use the saved values
 const client = new Client({
-    session: sessionData
+    // not enable multi device
+    authStrategy: new LegacySessionAuth({
+        session: sessionData
+    })
+
+    // enable multi device
+    // authStrategy: new LocalAuth({
+    //     session: sessionData
+    // })
 });
 
 
@@ -77,7 +86,7 @@ const sendMessage = async(chatId,message)=>{
 }
 
 const sendMedia = async(chatId,message)=>{
-    const media = MessageMedia.fromFilePath('./resources/images/c.jpg');
+    const media = MessageMedia.fromFilePath('./resources/images/passwordForHappiness.png');
     await client.sendMessage(chatId,media,{caption:message});
     console.log("Success!! ",chatId);
 }
